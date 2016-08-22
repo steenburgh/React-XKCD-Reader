@@ -9,7 +9,7 @@ module.exports = {
   //  "eval" will perform fastest builds and rebuilds, but does not provide source maps
   //  "cheap-eval-source-map" is fast and will provide non-perfect source maps
   //  "eval-source-map" will provide perfect source maps
-  devtool: "eval-source-map",
+  devtool: "source-map",
   entry: [
 
     // These lines are necessary for React Hot Loader.
