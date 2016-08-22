@@ -11,9 +11,10 @@ import ReactDOM from "react-dom";
 import RootContainer from "./RootContainer";
 
 const rootEl = document.getElementById("root");
+
 ReactDOM.render(
   <AppContainer>
-      <RootContainer />
+    <RootContainer />
   </AppContainer>,
   rootEl
 );
@@ -24,7 +25,7 @@ if (module.hot) {
 
     ReactDOM.render(
       <AppContainer>
-         <NextApp />
+        <NextApp />
       </AppContainer>,
       rootEl
     );
