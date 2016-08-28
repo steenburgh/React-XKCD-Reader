@@ -6,7 +6,7 @@ import Immutable from "immutable";
 import PureRenderMixin from "react-immutable-render-mixin";
 import React from "react";
 
-import { loadComic } from "actions/Actions";
+import { loadComic, loadLatestComic } from "actions/Actions";
 import Comic from "components/Comic";
 import ConstrainedNumberPicker from "components/ConstrainedNumberPicker";
 import Status from "components/Status";
@@ -18,7 +18,9 @@ const ComicViewer = React.createClass({
   propTypes: {
     comic: PropTypes.instanceOf(Immutable.Map).isRequired,
     error: PropTypes.bool.isRequired,
+    latestComicNum: PropTypes.number.isRequired,
     loadComic: PropTypes.func.isRequired,
+    loadLatestComic: PropTypes.func.isRequired,
     loading: PropTypes.bool.isRequired,
     params: PropTypes.shape({
       comicNum: PropTypes.number.isRequired,
@@ -29,14 +31,30 @@ const ComicViewer = React.createClass({
     return {
       comic: new Immutable.Map(),
       error: false,
+      latestComicNum: -1,
       loadComic: _.noop,
+      loadLatestComic: _.noop,
       loading: false,
       params: { comicNum: 0 },
     };
   },
 
+  getInitialState () {
+    return {
+      firstLoad: true,
+    };
+  },
+
   componentWillMount () {
-    this.props.loadComic(this.props.params.comicNum);
+    if (this.props.params.comicNum === 0) {
+      this.props.loadLatestComic().then(() => {
+        this._selectComic(this.props.latestComicNum);
+      });
+    } else {
+      this.props.loadLatestComic().then(() => {
+        this.props.loadComic(this.props.params.comicNum);
+      });
+    }
   },
 
   componentWillReceiveProps (nextProps) {
@@ -53,10 +71,9 @@ const ComicViewer = React.createClass({
     const {
       comic,
       error,
+      latestComicNum,
       loading,
     } = this.props;
-
-    const comicReady = !this.props.loading && !this.props.error;
 
     const style = {
       container: {
@@ -67,15 +84,24 @@ const ComicViewer = React.createClass({
       },
     };
 
+    if (this.props.latestComicNum === -1) {
+      return (
+        <Status
+          error={error}
+          loading={loading}
+        />
+      );
+    }
+
     return (
       <div style={style.container}>
         <ConstrainedNumberPicker
-          maxNum={1000}
+          maxNum={latestComicNum}
           num={this.props.params.comicNum}
           onPick={this._selectComic}
         />
         {
-          comicReady ?
+          (!this.props.loading && !this.props.error) ?
             <Comic
               alt={comic.get("alt", "")}
               imageUrl={comic.get("img", "")}
@@ -94,8 +120,9 @@ const ComicViewer = React.createClass({
 
 function mapStateToProps (state, ownProps) {
   return {
-    comic: state.comics.get(ownProps.params.comicNum, new Immutable.Map()),
+    comic: state.comics.getIn(["comics", ownProps.params.comicNum], new Immutable.Map()),
     error: state.status.error,
+    latestComicNum: state.comics.get("latestComicNum", -1),
     loading: state.status.loading,
   };
 }
@@ -104,5 +131,6 @@ export default connect(
   mapStateToProps,
   {
     loadComic,
+    loadLatestComic,
   }
 )(ComicViewer);

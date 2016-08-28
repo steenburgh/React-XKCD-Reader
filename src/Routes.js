@@ -24,7 +24,7 @@ const RouteContainer = React.createClass({
     return (
       <Router history={this.props.history}>
         <Route path="/" component={App}>
-          <IndexRedirect to="/1" />
+          <IndexRedirect to="/0" />
           <Route path="/:comicNum" component={ComicRoutesWrapper} />
         </Route>
       </Router>
