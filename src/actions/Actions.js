@@ -1,11 +1,13 @@
-import XkcdApi from 'api/XkcdApi';
+import XkcdApi from "api/XkcdApi";
 
 const ActionTypes = {
   COMIC_FETCH_ERROR: "COMIC_FETCH_ERROR",
   COMIC_FETCH_START: "COMIC_FETCH_START",
   COMIC_FETCH_SUCCESS: "COMIC_FETCH_SUCCESS",
-  COMIC_RESET_CACHE: "COMIC_RESET_CACHE",
 };
+
+
+let _pendingRequest = null;
 
 function loadComic (comicNum) {
   return (dispatch, getState) => {
@@ -14,7 +16,10 @@ function loadComic (comicNum) {
     }
 
     dispatch({ type: ActionTypes.COMIC_FETCH_START, num: comicNum });
-    return XkcdApi.getComic(comicNum)
+    if (_pendingRequest) {
+      _pendingRequest.cancel();
+    }
+    _pendingRequest = XkcdApi.getComic(comicNum)
       .then((data) => {
         dispatch({
           type: ActionTypes.COMIC_FETCH_SUCCESS,
@@ -25,9 +30,11 @@ function loadComic (comicNum) {
       .catch((err) => {
         dispatch({
           type: ActionTypes.COMIC_FETCH_ERROR,
-          payload: err,
+          err,
         });
       });
+
+    return _pendingRequest;
   };
 }
 

@@ -4,13 +4,17 @@ import jsonp from "lib/jsonp";
 const API_URL = "http://dynamic.xkcd.com/api-0/jsonp/";
 
 function _makeJSONpRequest (url) {
-  return new Promise((resolve, reject) => {
-    jsonp(url, (err, data) => {
+  return new Promise((resolve, reject, onCancel) => {
+    let canceller = jsonp(url, (err, data) => {
       if (err) {
         reject(err);
       } else {
         resolve(data);
       }
+    });
+
+    onCancel(() => {
+      canceller();
     });
   });
 }

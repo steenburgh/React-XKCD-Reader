@@ -2,6 +2,7 @@ import Promise from "bluebird";
 
 if (window) {
   window.Promise = Promise;
+  window.Promise.config({ cancellation: true });
 }
 
 import { AppContainer } from "react-hot-loader";
