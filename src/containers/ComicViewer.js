@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import { PropTypes } from "react";
 import _ from "lodash";
 import Immutable from "immutable";
+import PureRenderMixin from "react-immutable-render-mixin";
 import React from "react";
 
 import { loadComic } from "../actions/Actions";
@@ -11,47 +12,40 @@ import Status from "../components/Status";
 
 const ComicViewer = React.createClass({
 
+  mixins: [PureRenderMixin],
+
   propTypes: {
     comic: PropTypes.instanceOf(Immutable.Map).isRequired,
-    comicNum: PropTypes.number.isRequired,
     error: PropTypes.bool.isRequired,
     loadComic: PropTypes.func.isRequired,
     loading: PropTypes.bool.isRequired,
-    params: PropTypes.object,
+    params: PropTypes.shape({
+      comicNum: PropTypes.number.isRequired,
+    }),
   },
 
   getDefaultProps () {
     return {
-      comic: Immutable.Map(),
-      comicNum: 0,
+      comic: new Immutable.Map(),
       error: false,
       loadComic: _.noop,
       loading: false,
-      params: {},
+      params: { comicNum: 0 },
     };
   },
 
   componentWillMount () {
-    const comicNum = this.props.params && this.props.params.comicNum;
-    if (!comicNum) {
-
-    }
-
-    this._loadComic(comicNum);
+    this.props.loadComic(this.props.params.comicNum);
   },
 
-  componentWillReceiveProps(nextProps) {
-    if (this.props.comicNum !== nextProps.comicNum) {
-      this._loadComic(this.props.comicNum);
+  componentWillReceiveProps (nextProps) {
+    if (nextProps.params.comicNum !== this.props.params.comicNum) {
+      this.props.loadComic(nextProps.params.comicNum);
     }
   },
 
-  _loadComic (comicNum) {
-    if (!comicNum) {
-      return;
-    }
+  _selectComic (comicNum) {
     browserHistory.push(`/${comicNum}`);
-    this.props.loadComic(comicNum);
   },
 
   render () {
@@ -81,11 +75,8 @@ const ComicViewer = React.createClass({
 });
 
 function mapStateToProps (state, ownProps) {
-  const comicNum = ownProps.params && ownProps.params.comicNum || 0;
-
   return {
-    comic: comicNum ? state.comics.get(comicNum, Immutable.Map()) : Immutable.Map(),
-    comicNum,
+    comic: state.comics.get(ownProps.params.comicNum, new Immutable.Map()),
     error: state.status.error,
     loading: state.status.loading,
   };

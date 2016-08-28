@@ -6,7 +6,7 @@ import {
 import React from "react";
 
 import App from "./App";
-import ComicViewer from "containers/ComicViewer";
+import ComicRoutesWrapper from "./ComicRoutesWrapper";
 
 const RouteContainer = React.createClass({
 
@@ -24,8 +24,8 @@ const RouteContainer = React.createClass({
     return (
       <Router history={this.props.history}>
         <Route path="/" component={App}>
-          <IndexRedirect to="/0" />
-          <Route path="/:comicNum" component={ComicViewer} />
+          <IndexRedirect to="/1" />
+          <Route path="/:comicNum" component={ComicRoutesWrapper} />
         </Route>
       </Router>
     );
