@@ -1,7 +1,7 @@
 import { applyMiddleware, createStore } from "redux";
 import thunk from "redux-thunk";
 
-import rootReducer from "reducers/Reducers";
+import rootReducer from "../reducers";
 
 export function setupStore() {
   const store = createStore(
@@ -11,8 +11,8 @@ export function setupStore() {
   );
 
   if (module.hot) {
-    module.hot.accept("reducers/Reducers", () => {
-      const nextRootReducer = require("reducers/Reducers").default;
+    module.hot.accept("../reducers", () => {
+      const nextRootReducer = require("../reducers").default;
 
       store.replaceReducer(nextRootReducer);
     });

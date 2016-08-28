@@ -1,16 +1,12 @@
 import { routerReducer as routing } from "react-router-redux";
-
 import { combineReducers } from "redux";
 
-function reducer (state = {}, action) {
-  switch (action.type) {
-  default:
-    return state;
-  }
-}
+import comics from "./ComicsReducer"
+import status from "./StatusReducer";
 
 const rootReducer = combineReducers({
-  reducer,
+  comics,
+  status,
   routing,
 });
 

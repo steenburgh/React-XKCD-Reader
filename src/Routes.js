@@ -1,9 +1,12 @@
-import { IndexRoute, Route, Router } from "react-router";
+import {
+  IndexRedirect,
+  Route,
+  Router,
+} from "react-router";
 import React from "react";
 
 import App from "./App";
-import HomePage from "components/HomePage";
-import NotFoundPage from "components/NotFoundPage";
+import ComicViewer from "containers/ComicViewer";
 
 const RouteContainer = React.createClass({
 
@@ -21,8 +24,8 @@ const RouteContainer = React.createClass({
     return (
       <Router history={this.props.history}>
         <Route path="/" component={App}>
-          <IndexRoute component={HomePage}/>
-          <Route path="*" component={NotFoundPage}/>
+          <IndexRedirect to="/0" />
+          <Route path="/:comicNum" component={ComicViewer} />
         </Route>
       </Router>
     );
