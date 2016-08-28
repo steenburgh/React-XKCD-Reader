@@ -6,9 +6,10 @@ import Immutable from "immutable";
 import PureRenderMixin from "react-immutable-render-mixin";
 import React from "react";
 
-import { loadComic } from "../actions/Actions";
-import Comic from "../components/Comic";
-import Status from "../components/Status";
+import { loadComic } from "actions/Actions";
+import Comic from "components/Comic";
+import ConstrainedNumberPicker from "components/ConstrainedNumberPicker";
+import Status from "components/Status";
 
 const ComicViewer = React.createClass({
 
@@ -57,16 +58,33 @@ const ComicViewer = React.createClass({
 
     const comicReady = !this.props.loading && !this.props.error;
 
+    const style = {
+      container: {
+        alignItems: "center",
+        display: "flex",
+        flexDirection: "column",
+        width: "100%",
+      },
+    };
+
     return (
-      <div>
-        <Status
-          error={error}
-          loading={loading}
+      <div style={style.container}>
+        <ConstrainedNumberPicker
+          maxNum={1000}
+          num={this.props.params.comicNum}
+          onPick={this._selectComic}
         />
         {
-          comicReady && <Comic
-            title={comic.get('title', 'ayy lmao')}
-          />
+          comicReady ?
+            <Comic
+              alt={comic.get("alt", "")}
+              imageUrl={comic.get("img", "")}
+              title={comic.get("title", "")}
+            /> :
+            <Status
+              error={error}
+              loading={loading}
+            />
         }
       </div>
     );

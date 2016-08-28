@@ -1,7 +1,10 @@
-import React from "react";
 import { PropTypes } from "react";
+import React from "react";
+import PureRenderMixin from "react-immutable-render-mixin";
 
 const Status = React.createClass({
+
+  mixins: [PureRenderMixin],
 
   propTypes: {
     error: PropTypes.bool.isRequired,

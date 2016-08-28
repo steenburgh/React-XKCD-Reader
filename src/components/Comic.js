@@ -1,30 +1,59 @@
-import React from "react";
 import { PropTypes } from "react";
+import React from "react";
+import PureRenderMixin from "react-immutable-render-mixin";
 
 const Comic = React.createClass({
 
+  mixins: [PureRenderMixin],
+
   propTypes: {
+    alt: PropTypes.string.isRequired,
+    imageUrl: PropTypes.string.isRequired,
     title: PropTypes.string.isRequired,
   },
 
   getDefaultProps () {
     return {
-      error: false,
-      loading: false,
+      alt: "",
+      imageUrl: "",
+      title: "",
     };
   },
 
   render () {
-    const { title } = this.props;
+    const {
+      alt,
+      imageUrl,
+      title,
+    } = this.props;
 
     const style = {
-      border: "1px solid black",
-      margin: "auto",
-      padding: "10px",
+      container: {
+        display: "flex",
+        flexDirection: "column",
+      },
+      img: {
+        margin: "auto",
+        maxWidth: "100%",
+      },
+      title: {
+        textAlign: "center",
+      },
     };
 
     return (
-      <div style={style}>{title}</div>
+      <div
+        style={style.container}
+        title={alt}
+      >
+        <h2 style={style.title}>
+          {title}
+        </h2>
+        <img
+          src={imageUrl}
+          style={style.img}
+        />
+      </div>
     );
   },
 });
