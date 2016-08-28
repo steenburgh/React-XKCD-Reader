@@ -6,6 +6,7 @@ import rootReducer from "reducers/Reducers";
 export function setupStore() {
   const store = createStore(
     rootReducer,
+    window.devToolsExtension && window.devToolsExtension(),
     applyMiddleware(thunk),
   );
 
