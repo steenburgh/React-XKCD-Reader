@@ -4,11 +4,13 @@ import { PropTypes } from "react";
 import _ from "lodash";
 import Immutable from "immutable";
 import PureRenderMixin from "react-immutable-render-mixin";
+import Radium from "radium";
 import React from "react";
 
 import { loadComic, loadLatestComic } from "actions/Actions";
 import Comic from "components/Comic";
 import ConstrainedNumberPicker from "components/ConstrainedNumberPicker";
+import KeyCodes from "constants/KeyCodes";
 import Status from "components/Status";
 
 const ComicViewer = React.createClass({
@@ -63,6 +65,43 @@ const ComicViewer = React.createClass({
     }
   },
 
+  _handleKeydown (ev) {
+    switch (ev.keyCode) {
+      case KeyCodes.LEFT:
+        this._prevComic();
+        break;
+      case KeyCodes.RIGHT:
+        this._nextComic();
+        break;
+      default:
+        break;
+    }
+  },
+
+  _nextComic () {
+    const minNum = 1;
+    const maxNum = this.props.latestComicNum;
+    let nextNum = this.props.params.comicNum + 1;
+
+    if (nextNum >= maxNum) {
+      nextNum = minNum;
+    }
+
+    this._selectComic(nextNum);
+  },
+
+  _prevComic () {
+    const minNum = 1;
+    const maxNum = this.props.latestComicNum;
+    let nextNum = this.props.params.comicNum - 1;
+
+    if (nextNum <= minNum) {
+      nextNum = maxNum;
+    }
+
+    this._selectComic(nextNum);
+  },
+
   _selectComic (comicNum) {
     browserHistory.push(`/${comicNum}`);
   },
@@ -83,11 +122,18 @@ const ComicViewer = React.createClass({
         width: "100%",
         height: "100%",
         backgroundColor: "lightgray",
+        ":focus": {
+          outline: "none",
+        },
       },
     };
 
     return (
-      <div style={style.container}>
+      <div
+        onKeyDown={this._handleKeydown}
+        style={style.container}
+        tabIndex={0}
+      >
         {
           (this.props.latestComicNum !== -1) &&
           <ConstrainedNumberPicker
@@ -130,4 +176,4 @@ export default connect(
     loadComic,
     loadLatestComic,
   }
-)(ComicViewer);
+)(Radium(ComicViewer));
