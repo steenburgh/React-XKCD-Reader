@@ -81,35 +81,32 @@ const ComicViewer = React.createClass({
         display: "flex",
         flexDirection: "column",
         width: "100%",
+        height: "100%",
+        backgroundColor: "lightgray",
       },
     };
 
-    if (this.props.latestComicNum === -1) {
-      return (
-        <Status
-          error={error}
-          loading={loading}
-        />
-      );
-    }
-
     return (
       <div style={style.container}>
-        <ConstrainedNumberPicker
-          maxNum={latestComicNum}
-          num={this.props.params.comicNum}
-          onPick={this._selectComic}
-        />
         {
-          (!this.props.loading && !this.props.error) ?
+          (this.props.latestComicNum !== -1) &&
+          <ConstrainedNumberPicker
+            maxNum={latestComicNum}
+            num={this.props.params.comicNum}
+            onPick={this._selectComic}
+          />
+        }
+        {
+
+          error || loading ?
+            <Status
+              error={error}
+              loading={loading}
+            /> :
             <Comic
               alt={comic.get("alt", "")}
               imageUrl={comic.get("img", "")}
               title={comic.get("title", "")}
-            /> :
-            <Status
-              error={error}
-              loading={loading}
             />
         }
       </div>

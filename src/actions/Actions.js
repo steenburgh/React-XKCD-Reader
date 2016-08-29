@@ -3,6 +3,7 @@ import Immutable from 'immutable';
 import XkcdApi from "api/XkcdApi";
 
 const ActionTypes = {
+  COMIC_FETCH_CACHE: "COMIC_FETCH_CACHE",
   COMIC_FETCH_ERROR: "COMIC_FETCH_ERROR",
   COMIC_FETCH_START: "COMIC_FETCH_START",
   COMIC_FETCH_SUCCESS: "COMIC_FETCH_SUCCESS",
@@ -17,6 +18,7 @@ function loadComic (comicNum) {
     const cache = getState().comics.get("comics", new Immutable.Map());
 
     if (cache.has(comicNum)) {
+      dispatch({type: ActionTypes.COMIC_FETCH_CACHE});
       return null;
     }
 

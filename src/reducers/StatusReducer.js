@@ -13,6 +13,7 @@ export default (state = defaultStatus, action) => {
         loading: true,
         error: false,
       };
+    case ActionTypes.COMIC_FETCH_CACHE:
     case ActionTypes.COMIC_FETCH_SUCCESS:
       return {
         ...state,
