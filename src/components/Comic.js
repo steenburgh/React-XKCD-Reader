@@ -2,6 +2,8 @@ import { PropTypes } from "react";
 import React from "react";
 import PureRenderMixin from "react-immutable-render-mixin";
 
+import ImageWithLoader from "components/ImageWithLoader";
+
 const Comic = React.createClass({
 
   mixins: [PureRenderMixin],
@@ -32,7 +34,7 @@ const Comic = React.createClass({
         display: "flex",
         flexDirection: "column",
       },
-      img: {
+      image: {
         margin: "auto",
         maxWidth: "100%",
       },
@@ -49,9 +51,9 @@ const Comic = React.createClass({
         <h2 style={style.title}>
           {title}
         </h2>
-        <img
+        <ImageWithLoader
           src={imageUrl}
-          style={style.img}
+          style={style.image}
         />
       </div>
     );
