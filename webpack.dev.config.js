@@ -24,15 +24,6 @@ module.exports = {
   ],
   module: {
     loaders: [
-
-      // This loader will compile our code
-      // with Typescript instead of Babel.
-      // {
-      //   include: SRC_PATH,
-      //   loader: "awesome-typescript-loader",
-      //   test: /\.(j|t)s$/,
-      // },
-
       // This loader will compile our code with Babel,
       // which allows us to use ES6 syntax and imports.
       {
@@ -40,15 +31,6 @@ module.exports = {
         loaders: ["babel"],
         test: /\.js$/,
       },
-
-      // This loader allows us to import css files inside our js files
-      // instead of placing them in our HTML file:
-      //   import "styles/site.css";
-      {
-        include: SRC_PATH,
-        loader: "style-loader!css-loader",
-        test: /\.css$/,
-      }
     ],
     preLoaders: [
 
@@ -75,25 +57,8 @@ module.exports = {
     // This plugin allows our page to automatically reload
     // after saving changes during development.
     new webpack.HotModuleReplacementPlugin(),
-
-    // These are plugins that would be useful for a production build.
-    // They are commented out now for speed.
-    // new webpack.optimize.DedupePlugin(),
-    // new webpack.optimize.OccurenceOrderPlugin(),
-    // new webpack.optimize.UglifyJsPlugin(),
   ],
   resolve: {
-
-    // An alias allows us to use a specific version of a library
-    // with the standard import statement,
-    // instead of that library's default version.
-    alias: {
-
-      // In production, we should use the minified version of react,
-      // because the development version includes extra code
-      // to make development easier.
-      // react: path.join(__dirname, "node_modules/react/dist/react.min.js"),
-    },
     extensions: ["", ".js", ".ts"],
 
     // This is where webpack will look for files when it sees an import statement.
@@ -113,3 +78,4 @@ module.exports = {
     ],
   },
 };
+

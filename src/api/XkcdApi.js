@@ -1,7 +1,7 @@
 import Promise from "bluebird";
 import jsonp from "lib/jsonp";
 
-const API_URL = "http://dynamic.xkcd.com/api-0/jsonp/";
+const API_URL = "https://dynamic.xkcd.com/api-0/jsonp/";
 
 function _makeJSONpRequest (url) {
   return new Promise((resolve, reject, onCancel) => {
