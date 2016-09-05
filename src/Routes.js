@@ -8,7 +8,7 @@ import React from "react";
 import App from "./App";
 import ComicRoutesWrapper from "./ComicRoutesWrapper";
 
-const RouteContainer = React.createClass({
+const Routes = React.createClass({
 
   propTypes: {
     history: React.PropTypes.object.isRequired,
@@ -32,4 +32,4 @@ const RouteContainer = React.createClass({
   },
 });
 
-export default RouteContainer;
+export default Routes;
