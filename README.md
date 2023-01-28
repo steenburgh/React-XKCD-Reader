@@ -1,8 +1,7 @@
 # React-XKCD-Reader
 http://react-xkcd-reader.duncansteenburgh.com
 
-A rewrite of [steenburgh/XKCD-Reader](http://www.github.com/steenburgh/XKCD-Reader) using [React](https://reactjs.org/), [Immutable.js](https://immutable-js.com/) and [Redux](http://redux.js.org/).  
-The app is hosted using Firebase.
+A rewrite of [steenburgh/XKCD-Reader](http://www.github.com/steenburgh/XKCD-Reader) using [React](https://reactjs.org/), [Immutable.js](https://immutable-js.com/) and [Redux](http://redux.js.org/).
 
 ## Features
 * View all XKCD comics including the latest comic
