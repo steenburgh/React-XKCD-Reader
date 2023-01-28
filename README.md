@@ -1,7 +1,7 @@
 # React-XKCD-Reader
 http://react-xkcd-reader.duncansteenburgh.com
 
-A rewrite of [steenburgh/XKCD-Reader](http://www.github.com/steenburgh/XKCD-Reader) using [React](https://facebook.github.io/react/), [Immutable.js](https://facebook.github.io/immutable-js/) and [Redux](http://redux.js.org/).  
+A rewrite of [steenburgh/XKCD-Reader](http://www.github.com/steenburgh/XKCD-Reader) using [React](https://reactjs.org/), [Immutable.js](https://immutable-js.com/) and [Redux](http://redux.js.org/).  
 The app is hosted using Firebase.
 
 ## Features
